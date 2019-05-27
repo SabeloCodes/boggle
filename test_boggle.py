@@ -1,5 +1,4 @@
 import unittest
-
 import boggle
 
 class TestBoggle(unittest.TestCase):
@@ -13,3 +12,10 @@ class TestBoggle(unittest.TestCase):
         """
         grid = boggle.make_grid(0, 0)
         self.assertEqual(len(grid), 0)
+        
+    def test_grid_size_is_row_times_Column(self):
+        """
+        Test is to show that the total size of the grid is equal to width * height
+        """
+        grid = boggle.make_grid(2, 3)
+        self.assertEqual(len(grid), 6)
