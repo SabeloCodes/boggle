@@ -19,3 +19,16 @@ class TestBoggle(unittest.TestCase):
         """
         grid = boggle.make_grid(2, 3)
         self.assertEqual(len(grid), 6)
+        
+    def test_grid_cooerdinates(self):
+        """
+        Test to ensure that all coordinates inside grig can be accessed
+        """
+        
+        grid = boggle.make_grid(2, 2)
+        self.assertIn((0, 0), grid) #Use assertIn method to check if (0, 0) is in (2, 2) grid
+        self.assertIn((0, 1), grid) #Use assertIn method to check if (0, 1) is in (2, 2) grid
+        self.assertIn((1, 0), grid) #Use assertIn method to check if (1, 0) is in (2, 2) grid
+        self.assertIn((1, 1), grid) #Use assertIn method to check if (1, 1) is in (2, 2) grid
+        self.assertNotIn((2, 2), grid) #Use assertNotIn method to check if (2, 2) is not in (2, 2) grid
+        
