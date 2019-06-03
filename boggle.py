@@ -1,6 +1,7 @@
 from string import ascii_uppercase
 from random import choice
 
+
 def make_grid(width, height):
     """
    Create grid that will hold the tiles for the boggle game
@@ -9,6 +10,7 @@ def make_grid(width, height):
         for row in range(height)
         for col in range(width)
     }
+    
     
 def neighbours_of_position(coords):
     """
@@ -38,6 +40,7 @@ def neighbours_of_position(coords):
             left, right,
             bottom_left, bottom_center, bottom_right]
             
+            
 def all_grid_neighbours(grid):
     """
     Get all of the possible neighbours for each position in
@@ -49,14 +52,12 @@ def all_grid_neighbours(grid):
         neighbours[position] = [p for p in position_neighbours if p in grid]
     return neighbours
     
+    
 def path_to_word(grid, path):
     """
     Add letters on the path to a string
     """
     return ''.join([grid[p] for p in path])
-    
-def word_in_dictionary(word, dict):
-    return word in dict
     
     
 def search(grid, dictionary):
@@ -66,11 +67,14 @@ def search(grid, dictionary):
     """
     neighbours = all_grid_neighbours(grid)
     paths = []
+    full_words, stems = dictionary
     
     def do_search(path):
         word = path_to_word(grid, path)
-        if word_in_dictionary(word, dictionary):
+        if word in full_words:
             paths.append(path)
+        if word not in stems:
+            return
         for next_pos in neighbours[path[-1]]:
             if next_pos not in path:
                 do_search(path + [next_pos])
@@ -83,13 +87,23 @@ def search(grid, dictionary):
         words.append(path_to_word(grid, path))
     return set(words)
     
+    
 def get_dictionary(dictionary_file):
-        """
-        Load dictionary file
-        """
-        with open(dictionary_file) as f:
-            return{w.strip().upper() for w in f}
-            
+    """
+    Load dictionary file
+    """
+    full_words, stems = set(), set()
+    with open(dictionary_file) as f:
+        for word in f:
+            word = word.strip().upper()
+            full_words.add(word)
+
+            for i in range(1, len(word)):
+                stems.add(word[:i])
+
+        return full_words, stems
+
+
 def main():
     """
     This is the function that will run the whole project
