@@ -88,7 +88,7 @@ def get_dictionary(dictionary_file):
         Load dictionary file
         """
         with open(dictionary_file) as f:
-            return[w.strip().upper() for w in f]
+            return{w.strip().upper() for w in f}
             
 def main():
     """
